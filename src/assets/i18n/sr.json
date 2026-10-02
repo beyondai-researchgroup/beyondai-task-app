@@ -1,0 +1,39 @@
+{
+  "ACCESS_INFO": {
+    "TITLE": "Pristup samo preko ličnog linka",
+    "TEXT": "Ovom zadatku možete pristupiti samo preko ličnog linka koji ste dobili mejlom. Proverite svoj inboks, ili se obratite istraživaču na beyondai.researchgroup@gmail.com ako niste dobili mejl."
+  },
+  "LINK": {
+    "LOADING": "Proveravam link…",
+    "ALREADY_TITLE": "Zadatak je već predat",
+    "ALREADY_TEXT": "Već ste predali ovaj zadatak, hvala Vam! Možete zatvoriti ovu stranicu.",
+    "ERROR_TITLE": "Link nije važeći",
+    "ERROR_EXPIRED": "Ovaj link je istekao (linkovi važe 24 sata). Obratite se istraživaču kako bi Vam poslao novi link.",
+    "ERROR_NOT_FOUND": "Ovaj link nije prepoznat. Proverite da li ste kopirali ceo link iz mejla, ili se obratite istraživaču.",
+    "ERROR_NOT_ACTIVE": "Ovaj link trenutno nije aktivan. Obratite se istraživaču.",
+    "ERROR_SERVER": "Došlo je do greške pri proveri linka. Pokušajte ponovo malo kasnije."
+  },
+  "DONE": {
+    "TITLE": "Hvala vam!",
+    "TEXT": "Vaš zadatak je uspešno predat. Možete zatvoriti ovu stranicu."
+  },
+  "TASK": {
+    "PDF_LABEL": "Preuzmi PDF zadatka",
+    "UPLOAD_HEADING": "Predaja rešenja",
+    "UPLOAD_HINT": "Dozvoljeni tipovi fajlova: {{types}}.",
+    "UPLOAD_HINT_SINGLE": "Možete otpremiti tačno jedan fajl.",
+    "UPLOAD_HINT_MULTIPLE": "Možete otpremiti više fajlova.",
+    "ANY_FILE_TYPE": "bilo koji",
+    "DROPZONE_TEXT": "Prevucite fajl(ove) ovde ili kliknite dugme ispod.",
+    "BROWSE_BUTTON": "Izaberi fajl(ove)",
+    "REMOVE_FILE": "Ukloni",
+    "SUBMIT_BUTTON": "Pošalji zadatak",
+    "SUBMITTING": "Šaljem…",
+    "SUBMIT_ERROR": "Greška pri slanju. Pokušajte ponovo.",
+    "RETRY_BUTTON": "Pokušaj ponovo",
+    "ERROR_SINGLE_FILE_ONLY": "Za ovaj zadatak je dozvoljen samo jedan fajl.",
+    "ERROR_TOO_MANY_FILES": "Previše fajlova (maksimum {{max}}).",
+    "ERROR_FILE_TOO_LARGE": "Fajl \"{{name}}\" je prevelik (maksimum 25MB).",
+    "ERROR_FILE_TYPE": "Fajl \"{{name}}\" nije dozvoljenog tipa."
+  }
+}

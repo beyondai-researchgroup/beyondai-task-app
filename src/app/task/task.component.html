@@ -1,0 +1,72 @@
+<div class="page-wrapper">
+  <div class="task-container">
+
+    <header class="task-header">
+      <h1 class="task-title">{{ state.taskTitle }}</h1>
+      <app-timer-display [minutes]="state.timerMinutes" (expired)="onTimerExpired()"></app-timer-display>
+    </header>
+
+    @if (instructionsParagraphs().length || state.hasPdf) {
+      <div class="card task-instructions-card">
+        @for (p of instructionsParagraphs(); track $index) {
+          <p class="task-instructions-text">{{ p }}</p>
+        }
+        @if (state.hasPdf) {
+          <button type="button" class="btn-ghost" (click)="downloadPdf()">{{ 'TASK.PDF_LABEL' | translate }}</button>
+        }
+      </div>
+    }
+
+    <section class="card upload-card">
+      <h2 class="upload-heading">{{ 'TASK.UPLOAD_HEADING' | translate }}</h2>
+      <p class="upload-hint">
+        {{ 'TASK.UPLOAD_HINT' | translate: { types: allowedTypesHint() } }}
+        {{ (state.allowMultipleFiles ? 'TASK.UPLOAD_HINT_MULTIPLE' : 'TASK.UPLOAD_HINT_SINGLE') | translate }}
+      </p>
+
+      <div
+        class="dropzone"
+        [class.dropzone--active]="dragOver()"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
+        (drop)="onDrop($event)"
+      >
+        <p class="dropzone-text">{{ 'TASK.DROPZONE_TEXT' | translate }}</p>
+        <label class="btn-ghost dropzone-browse">
+          {{ 'TASK.BROWSE_BUTTON' | translate }}
+          <input type="file" hidden [multiple]="state.allowMultipleFiles" (change)="onFileInputChange($event)" />
+        </label>
+      </div>
+
+      @if (fileError()) {
+        <p class="field-error">{{ fileError() }}</p>
+      }
+
+      @if (queuedFiles().length) {
+        <ul class="queued-files">
+          @for (f of queuedFiles(); track f.name + $index) {
+            <li class="queued-file">
+              <span class="queued-file-name">{{ f.name }}</span>
+              <button type="button" class="btn-remove" (click)="removeFile($index)" [disabled]="submitting()">
+                {{ 'TASK.REMOVE_FILE' | translate }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+
+      <div class="submit-row">
+        <button type="button" class="btn-primary" [disabled]="!canSubmit()" (click)="submit()">
+          {{ (submitting() ? 'TASK.SUBMITTING' : 'TASK.SUBMIT_BUTTON') | translate }}
+        </button>
+        @if (submitError()) {
+          <p class="field-error">{{ 'TASK.SUBMIT_ERROR' | translate }}</p>
+          <button type="button" class="btn-ghost" [disabled]="submitting()" (click)="retry()">
+            {{ 'TASK.RETRY_BUTTON' | translate }}
+          </button>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

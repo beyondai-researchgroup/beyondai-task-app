@@ -1,0 +1,39 @@
+{
+  "ACCESS_INFO": {
+    "TITLE": "Access via personal link only",
+    "TEXT": "This task can only be accessed via the personal link you received by email. Check your inbox, or contact the researcher at beyondai.researchgroup@gmail.com if you haven't received it."
+  },
+  "LINK": {
+    "LOADING": "Checking link…",
+    "ALREADY_TITLE": "Task already submitted",
+    "ALREADY_TEXT": "You've already submitted this task, thank you! You can close this page.",
+    "ERROR_TITLE": "Invalid link",
+    "ERROR_EXPIRED": "This link has expired (links are valid for 24 hours). Contact the researcher so they can send you a new one.",
+    "ERROR_NOT_FOUND": "This link wasn't recognized. Check that you copied the full link from the email, or contact the researcher.",
+    "ERROR_NOT_ACTIVE": "This link isn't currently active. Contact the researcher.",
+    "ERROR_SERVER": "An error occurred while checking the link. Try again shortly."
+  },
+  "DONE": {
+    "TITLE": "Thank you!",
+    "TEXT": "Your task has been submitted successfully. You can close this page."
+  },
+  "TASK": {
+    "PDF_LABEL": "Download task PDF",
+    "UPLOAD_HEADING": "Submit your solution",
+    "UPLOAD_HINT": "Allowed file types: {{types}}.",
+    "UPLOAD_HINT_SINGLE": "You may upload exactly one file.",
+    "UPLOAD_HINT_MULTIPLE": "You may upload multiple files.",
+    "ANY_FILE_TYPE": "any",
+    "DROPZONE_TEXT": "Drag file(s) here or click the button below.",
+    "BROWSE_BUTTON": "Choose file(s)",
+    "REMOVE_FILE": "Remove",
+    "SUBMIT_BUTTON": "Submit task",
+    "SUBMITTING": "Submitting…",
+    "SUBMIT_ERROR": "Failed to submit. Try again.",
+    "RETRY_BUTTON": "Try again",
+    "ERROR_SINGLE_FILE_ONLY": "Only one file is allowed for this task.",
+    "ERROR_TOO_MANY_FILES": "Too many files (max {{max}}).",
+    "ERROR_FILE_TOO_LARGE": "File \"{{name}}\" is too large (max 25MB).",
+    "ERROR_FILE_TYPE": "File \"{{name}}\" is not an allowed type."
+  }
+}

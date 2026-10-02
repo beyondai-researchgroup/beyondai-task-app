@@ -1,0 +1,141 @@
+.task-container {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.task-title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.task-instructions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.task-instructions-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.upload-heading {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.dropzone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+
+  &--active {
+    border-color: var(--color-accent);
+    background: rgba(var(--color-accent-rgb), 0.06);
+  }
+}
+
+.dropzone-text {
+  color: var(--color-muted);
+  font-size: 14px;
+  margin: 0;
+  text-align: center;
+}
+
+.dropzone-browse {
+  width: auto;
+}
+
+.queued-files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.queued-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-card);
+}
+
+.queued-file-name {
+  font-size: 13px;
+  color: var(--color-text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: var(--color-error);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    color: var(--color-muted);
+    cursor: not-allowed;
+  }
+}
+
+.submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+}
+
+.field-error {
+  font-size: 13px;
+  color: var(--color-error);
+  margin: 0;
+  text-align: center;
+}
