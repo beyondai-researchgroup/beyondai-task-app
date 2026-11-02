@@ -25,6 +25,30 @@ const FILE_TYPE_EXTENSIONS = {
   TEXT: ['.txt', '.md'],
 };
 
+// Research-protocol engine hook (2026-10): when a participant of a PROTOCOL research submits their task, tell the engine
+// so their next protocol step can go out right away. A strict no-op unless PROTOCOL_ENGINE_URL/PROTOCOL_ENGINE_SECRET
+// are configured AND the participant's research is in PROTOCOL mode, so a classic research is untouched. Best-effort.
+async function notifyProtocolEngine(sql, participantGuid) {
+  const url = process.env.PROTOCOL_ENGINE_URL;
+  const secret = process.env.PROTOCOL_ENGINE_SECRET;
+  if (!url || !secret) return;
+  try {
+    const rows = await sql`
+      SELECT r."FlowMode" FROM "Participant" p JOIN "Research" r ON r."Id" = p."ResearchId" WHERE p."Guid" = ${participantGuid} LIMIT 1
+    `;
+    if (rows[0]?.FlowMode !== 'PROTOCOL') return;
+    const res = await fetch(`${url.replace(/\/$/, '')}/api/protocol-engine/advance`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Engine-Secret': secret },
+      body: JSON.stringify({ participantGuid }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) console.error('[task-app] protocol engine returned', res.status);
+  } catch (err) {
+    console.error('[task-app] protocol engine notify failed:', err?.message ?? err);
+  }
+}
+
 const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const MAX_FILES = 20;
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: MAX_FILE_BYTES, files: MAX_FILES } });
@@ -235,6 +259,7 @@ app.post('/api/link/:token/submit', uploadFiles, async (req, res) => {
       `;
     }
 
+    await notifyProtocolEngine(sql, row.ParticipantGuid);
     res.status(201).json({ ok: true });
   } catch (err) {
     console.error('[DB] submit error:', err);
