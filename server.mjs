@@ -93,7 +93,7 @@ app.use(express.json());
 // admin-dashboard's "platform improvements round 2" plan).
 async function resolveTaskLink(sql, token) {
   const rows = await sql`
-    SELECT sat."ParticipantId", sat."ParticipantGuid", sat."ExpiresAt", p."Language",
+    SELECT r."ShowBeyondAiBranding", sat."ParticipantId", sat."ParticipantGuid", sat."ExpiresAt", p."Language",
            r."ConsentPortalActive", p."GenericTaskId",
            t."Title", t."InstructionsText", t."PdfFilename", t."TimerMinutes", t."AllowedFileTypes", t."AllowMultipleFiles"
     FROM "SurveyAccessToken" sat
@@ -105,15 +105,15 @@ async function resolveTaskLink(sql, token) {
   `;
   if (!rows.length) return { error: 'NOT_FOUND' };
   const row = rows[0];
-  if (new Date(row.ExpiresAt) < new Date()) return { error: 'EXPIRED' };
-  if (row.ConsentPortalActive === false) return { error: 'NOT_ACTIVE' };
+  if (new Date(row.ExpiresAt) < new Date()) return { error: 'EXPIRED', showBranding: row.ShowBeyondAiBranding !== false };
+  if (row.ConsentPortalActive === false) return { error: 'NOT_ACTIVE', showBranding: row.ShowBeyondAiBranding !== false };
   if (row.GenericTaskId == null || !row.Title) {
     // The participant's task assignment was removed after the link was issued — treat the same
     // as "not found" rather than crashing on a null task.
     return { error: 'NOT_FOUND' };
   }
   const existing = await sql`SELECT 1 FROM "GenericTaskSubmission" WHERE "ParticipantGuid" = ${row.ParticipantGuid} LIMIT 1`;
-  if (existing.length) return { error: 'ALREADY_COMPLETED' };
+  if (existing.length) return { error: 'ALREADY_COMPLETED', showBranding: row.ShowBeyondAiBranding !== false };
   return { row };
 }
 
@@ -128,13 +128,14 @@ app.get('/api/link/:token', async (req, res) => {
     const result = await resolveTaskLink(sql, token);
     if (result.error) {
       const status = result.error === 'EXPIRED' ? 410 : result.error === 'NOT_ACTIVE' ? 403 : result.error === 'ALREADY_COMPLETED' ? 409 : 404;
-      res.status(status).json({ error: result.error });
+      res.status(status).json({ error: result.error, showBranding: result.showBranding });
       return;
     }
     const row = result.row;
     res.json({
       participantId: row.ParticipantId,
       lang: row.Language ?? 'sr',
+      showBranding: row.ShowBeyondAiBranding !== false,
       taskTitle: row.Title,
       taskInstructionsText: row.InstructionsText,
       hasPdf: !!row.PdfFilename,
