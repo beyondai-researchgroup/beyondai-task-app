@@ -132,6 +132,13 @@ app.get('/api/link/:token', async (req, res) => {
       return;
     }
     const row = result.row;
+    // The first time the participant opens the task is the start of their work (the countdown begins on this page). Written once;
+    // best-effort, so a failure here never keeps a participant out of their task.
+    try {
+      await sql`INSERT INTO "GenericTaskStart" ("ParticipantGuid") VALUES (${row.ParticipantGuid}) ON CONFLICT ("ParticipantGuid") DO NOTHING`;
+    } catch (err) {
+      console.error('[DB] task start record error:', err.message);
+    }
     res.json({
       participantId: row.ParticipantId,
       lang: row.Language ?? 'sr',
